@@ -27,6 +27,11 @@
 .spaceBetween {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+}
+
+.input {
+    width: 100px;
 }
 
 .roundBtn {

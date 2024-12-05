@@ -9,7 +9,7 @@ const ProductDetail = () => {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [mainImage, setMainImage] = useState("");
-  const [activeImage, setActiveImage] = useState(0);
+  // const [activeImage, setActiveImage] = useState(0); 
   const [selectedColor, setSelectedColor] = useState("");
   const [activeSize, setActiveSize] = useState("");
   const [activeThreads, setActiveThreads] = useState("");
@@ -46,25 +46,26 @@ const ProductDetail = () => {
 
   const handleThumbnailClick = (image, index) => {
     setMainImage(image);
-    setActiveImage(index);
+    // setActiveImage(index);
+    index===0 ? setSelectedColor('white') : setSelectedColor('black');
   };
 
-  const handleColorChange = (color) => {
-    setSelectedColor(color);
-    if (product && product.colors) {
-      const selectedProductColor = product.colors.find(
-        (c) => c.color === color
-      );
+  // const handleColorChange = (color) => {
+  //   setSelectedColor(color);
+  //   if (product && product.colors) {
+  //     const selectedProductColor = product.colors.find(
+  //       (c) => c.color === color
+  //     );
 
-      // Seçilmiş rəngin şəkili varsa, onu göstəririk
-      if (selectedProductColor && selectedProductColor.image) {
-        setMainImage(selectedProductColor.image);
-      } else {
-        // Əgər rəng üçün şəkil yoxdursa, əsas şəkili göstəririk
-        setMainImage(product.images.main);
-      }
-    }
-  };
+  //     // Seçilmiş rəngin şəkili varsa, onu göstəririk
+  //     if (selectedProductColor && selectedProductColor.image) {
+  //       setMainImage(selectedProductColor.images.main);
+  //     } else {
+  //       // Əgər rəng üçün şəkil yoxdursa, əsas şəkili göstəririk
+  //       setMainImage(product.images.main);
+  //     }
+  //   }
+  // };
 
   const handleSizeClick = (size) => {
     setActiveSize(size);
@@ -121,6 +122,8 @@ const ProductDetail = () => {
       ? [product.images?.front, product.images?.black_front]
       : [];
 
+
+
   return (
     <div className="container">
       <div className="product-container">
@@ -137,7 +140,7 @@ const ProductDetail = () => {
                   key={index}
                   src={image}
                   alt={`Variant ${index + 1}`}
-                  className={activeImage === index ? "active" : ""}
+                  className={((selectedColor==='white' && index===0 ) || (selectedColor==='black' && index===1)) ? "active" : ""}
                   onClick={() => handleThumbnailClick(image, index)}
                 />
               ))}
@@ -146,7 +149,7 @@ const ProductDetail = () => {
           <div className="product-info">
             <h1>{product.name}</h1>
             <p>{product.description}</p>
-            {product.colors && product.colors.length > 0 && (
+            {/* {product.colors && product.colors.length > 0 && (
               <div className="color-variants">
                 <p>Rəng variantları</p>
                 <div className="colors">
@@ -162,7 +165,7 @@ const ProductDetail = () => {
                   ))}
                 </div>
               </div>
-            )}
+            )} */}
             {product.threads && (
               <div className="threads-variants">
                 <p>Material</p>

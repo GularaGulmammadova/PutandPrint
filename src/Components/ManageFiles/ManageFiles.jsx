@@ -5,54 +5,52 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios'; 
 
-const ManageFiles = ({ frontContent, backContent, setColor, product, downloadDesign, id }) => {
+const ManageFiles = ({ frontContent, backContent, setColor, product, downloadDesign, id, captureScreenshot }) => {
   const [size, setSize] = useState('S');
   const [material, setMaterial] = useState('Nazik'); 
+  const [quantity, setQuantity] = useState(1); 
   const navigate = useNavigate();
   const sizes = ['S', 'M', 'L', 'XL', '2XL'];
   const materials = ['Nazik', 'Qalın'];
 
   function base64ToFile(base64, filename) {
     const arr = base64.split(','); 
-    const mime = arr[0].match(/:(.*?);/)[1];
-    const bstr = atob(arr[1]);
-    const n = bstr.length;
-    const u8arr = new Uint8Array(n);
 
-    for (let i = 0; i < n; i++) {
+    if (arr && arr[0] && arr[0].match(/:(.*?);/) && arr[0].match(/:(.*?);/)[1]){
+      const mime = arr[0].match(/:(.*?);/)[1];
+      const bstr = atob(arr[1]);
+      const n = bstr.length;
+      const u8arr = new Uint8Array(n);
+
+      for (let i = 0; i < n; i++) {
         u8arr[i] = bstr.charCodeAt(i);
-    }
+      }
 
-    return new File([u8arr], filename, { type: mime });
+      return new File([u8arr], filename, { type: mime });
+    }
+    return null;
   }
 
 
   const handleOrderClick = async () => {
+    captureScreenshot();
     const formData = new FormData();
 
     const frontImageFile = frontContent.image.value && frontContent.image.value.src ? base64ToFile(frontContent.image.value.src, 'frontImage.png') : base64ToFile(frontContent.screenshot, 'frontMockup.png');
-    const backImageFile = backContent.image.value && backContent.image.value.src ? base64ToFile(backContent.image.value.src, 'backImage.png') : base64ToFile(backContent.screenshot, 'backMockup.png');
+    const backImageFile = backContent.image.value && backContent.image.value.src ? base64ToFile(backContent.image.value.src, 'backImage.png') : base64ToFile(frontContent.screenshot, 'frontMockup.png');
     const frontMockupFile = base64ToFile(frontContent.screenshot, 'frontMockup.png');
     const backMockupFile = backContent.screenshot ? base64ToFile(backContent.screenshot, 'backMockup.png') : base64ToFile(frontContent.screenshot, 'frontMockup.png');
   
-    if (frontImageFile) {
-      formData.append('front_image', frontImageFile);
-    }
-    if (backImageFile) {
-      formData.append('back_image', backImageFile);
-    }
-    if (frontMockupFile) {
-      formData.append('front_mockup', frontMockupFile);
-    }
-    if (backMockupFile) {
-      formData.append('back_mockup', backMockupFile);
-    }
+    formData.append('front_image', frontImageFile);
+    formData.append('back_image', backImageFile);
+    formData.append('front_mockup', frontMockupFile);
+    formData.append('back_mockup', backMockupFile || frontMockupFile);
   
     const orderData = {
       color: frontContent.tshirtColor.toUpperCase(),
       material: material.toUpperCase(),
       size: size.toUpperCase(),
-      quantity: 1,
+      quantity: quantity,
       text: `front: ${frontContent.label.title}, back: ${backContent.label.title}`,
       text_color: frontContent.label.color,
       text_font: frontContent.label.fontFamily,
@@ -106,7 +104,7 @@ const ManageFiles = ({ frontContent, backContent, setColor, product, downloadDes
         {product.name !== "Eko Çanta" && (
           <>
             <h3 className={styles.title}>Məhsul rəngi</h3>
-            <ColorPicker setColor={setColor} />
+            <ColorPicker setColor={(c) => {setColor(c); captureScreenshot();}} />
           </>
         )}
 
@@ -149,6 +147,11 @@ const ManageFiles = ({ frontContent, backContent, setColor, product, downloadDes
           <h3 className={styles.title}>Ümumi Qiymət</h3>
           {!product.minPrice && <h3 className={styles.title}>{product.price}</h3>}
           {product.minPrice && <h3 className={styles.title}>{material === 'Nazik' ? product.minPrice : product.maxPrice}</h3>}
+        </div>
+
+        <div className={styles.spaceBetween}>
+          <h3 className={styles.title}>Sayı</h3>
+          <input className={styles.input} type='number' onChange={e => setQuantity(e.target.value)} defaultValue={quantity} />
         </div>
         
         <button onClick={() => { downloadDesign(); }} className={styles.orderBtn}>Dizaynı yüklə</button>

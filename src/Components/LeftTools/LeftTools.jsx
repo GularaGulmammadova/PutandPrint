@@ -207,7 +207,7 @@ const LeftTools = ({ setContent, content, deleteImg, handleImageChange, setShowT
           />
           <h3 className={styles.title}>Şrift ölçüsünü seçin</h3>
           <input
-            defaultValue={content.label.fontSize}
+            value={Math.round(content.label.fontSize)}
             onChange={(e) =>
               setContent({
                 ...content,

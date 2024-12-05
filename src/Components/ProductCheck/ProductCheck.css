@@ -4,6 +4,10 @@
   margin: 0 auto;
 }
 
+.smallTitle {
+  margin-right: 20px;
+}
+
 .product-check-box {
   border: 1px solid #dedede;
   border-radius: 6px;

@@ -7,18 +7,8 @@ import { Link } from "react-router-dom";
 
 const ProductCheck = () => {
   const { id } = useParams();
-  const [quantity, setQuantity] = useState(1);
-  const [selectedColor, setSelectedColor] = useState("white"); 
   const [data, setData] = useState();
   const [product, setProduct] = useState();
-
-  const handleQuantityChange = (e) => {
-    setQuantity(e.target.value);
-  };
-
-  const handleColorChange = (e) => {
-    setSelectedColor(e.target.value);
-  };
 
   const getOrdering = async (id) => {
     try {
@@ -52,7 +42,7 @@ const ProductCheck = () => {
 
   if (!data) {
     return (
-      <div
+      <div 
         style={{
           display: "flex",
           justifyContent: "center",
@@ -84,7 +74,7 @@ const ProductCheck = () => {
   }
 
   
-  const showColorOptions = data.id >= 1 && data.id <= 14;
+  const showColorOptions = data.product >= 1 && data.product <= 14;
 
   const sizes = ['S', 'M', 'L', 'XL', '2XL']
 
@@ -110,9 +100,9 @@ const ProductCheck = () => {
                 <div className="check-boxes-option">
                   <label>Rəng</label>
                   <select
-                    value={selectedColor}
-                    onChange={handleColorChange}
-                    disabled={data.id === 6} 
+                    value={data.color.toLowerCase()}
+                    // disabled={data.id === 6} 
+                    disabled={true}
                   >
                     <option value="white">Ağ</option>
                     {data.id !== 6 && (
@@ -122,10 +112,11 @@ const ProductCheck = () => {
                 </div>
               )}
               <div className="check-boxes-option">
-                <label>Ölçü</label>
-                <select>
+                <label className="smallTitle">Ölçü</label>
+                <select disabled={true}>
                   {sizes.map((s,i) => s===data.size ? <option selected="selected" key={i}>{s}</option> : <option key={i}>{s}</option>)}
                 </select>
+                
               </div>
             </div>
             <div className="check-box-info">
@@ -133,14 +124,14 @@ const ProductCheck = () => {
               <div className="product-prices">
                 {data.material==='NAZIK' ? product?.price_thin : product?.price_thick} ×
                 <input
+                  disabled={true}
                   type="number"
-                  value={quantity}
-                  onChange={handleQuantityChange}
+                  value={data.quantity}
                   className="check-quantity-input"
                   min="1"
                 />
                 <div className="product-totally-price">
-                  {(data.material==='NAZIK' ? product?.price_thin : product?.price_thick)* quantity} ₼
+                  = {(data.material==='NAZIK' ? product?.price_thin : product?.price_thick)* data.quantity} ₼
                 </div>
               </div>
             </div>

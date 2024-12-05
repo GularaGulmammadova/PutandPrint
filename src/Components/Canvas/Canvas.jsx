@@ -21,6 +21,7 @@ const Canvas = ({ product,id }) => {
   const [cvsHeight, setCvsHeight] = useState((window.innerHeight / 10) * 8);
   const [showTrasformer, setShowTransformer] = useState(false);
   const [showTrasformerL, setShowTransformerL] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   const handleImageClick = () => {
     setShowTransformer(true);
@@ -312,11 +313,40 @@ const Canvas = ({ product,id }) => {
     });
   };
 
+  // useEffect(() => {
+  //   showFront ? setFrontContent({...frontContent, screenshot: captureScreenshot()}) : setBackContent({...backContent, screenshot: captureScreenshot()});
+  // }, [])
+
+  useEffect(() => {
+    const handleLoad = () => {
+      setIsLoaded(true);
+    };
+
+    window.addEventListener('load', handleLoad);
+    
+    return () => {
+      window.removeEventListener('load', handleLoad);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (isLoaded) {
+      if (showFront) {
+        setFrontContent(prev => ({ ...prev, screenshot: captureScreenshot() }));
+      } else {
+        setBackContent(prev => ({ ...prev, screenshot: captureScreenshot() }));
+      }
+    }
+  }, [isLoaded, showFront]);
+
+  // useEffect(() => {
+  //   console.log(frontContent.screenshot)
+  // }, [frontContent])
 
   useEffect(() => {
     showFront ? setFrontContent({...frontContent, screenshot: captureScreenshot()}) : setBackContent({...backContent, screenshot: captureScreenshot()});
     
-  }, [frontContent.image, frontContent.label, backContent.image, backContent.label,frontContent.tshirtColor, backContent.tshirtColor])
+  }, [frontContent.image, frontContent.label, backContent.image, backContent.label, frontContent.tshirtColor, backContent.tshirtColor])
 
   return (
     <div className={styles.flex}>
@@ -560,10 +590,12 @@ const Canvas = ({ product,id }) => {
         setColor={(c) => {
           setFrontContent({ ...frontContent, tshirtColor: c });
           setBackContent({ ...backContent, tshirtColor: c });
+          captureScreenshot();
         }}
         image={
           showFront ? frontContent.image.value.src : backContent.image.value.src
         }
+        captureScreenshot={captureScreenshot}
         submitDesign={submitDesign}
         downloadDesign={downloadDesign}
       />

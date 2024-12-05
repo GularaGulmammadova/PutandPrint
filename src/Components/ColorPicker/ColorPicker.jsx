@@ -1,8 +1,9 @@
+/* eslint-disable react/prop-types */
 import styles from './ColorPicker.module.css'
 
 const ColorPicker = ({type, setColor}) => {
 
-  const colors = type==='tshirt' ? ['white', '#262626', 'magenta', 'red', 'teal', 'grey'] : ['white', '#262626'];
+  const colors = type==='tshirt' ? ['white', 'black', 'magenta', 'red', 'teal', 'grey'] : ['white', 'black'];
 
   return (
     <div className={type!=='tshirt' ? styles.twoColors : styles.colors}>
