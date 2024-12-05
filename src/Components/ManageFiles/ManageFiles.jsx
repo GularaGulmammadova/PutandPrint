@@ -5,13 +5,31 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios'; 
 
-const ManageFiles = ({ frontContent, backContent, setColor, product, downloadDesign, id, captureScreenshot }) => {
-  const [size, setSize] = useState('S');
-  const [material, setMaterial] = useState('Nazik'); 
+const ManageFiles = ({ size, setSize, frontContent, material, setMaterial, backContent, setColor, product, downloadDesign, id, captureScreenshot }) => {
+  // const [size, setSize] = useState('S');
+  // const [material, setMaterial] = useState('Nazik'); 
   const [quantity, setQuantity] = useState(1); 
   const navigate = useNavigate();
   const sizes = ['S', 'M', 'L', 'XL', '2XL'];
-  const materials = ['Nazik', 'Qalın'];
+  const materials = ['Nazik', 'Qalın']; 
+  // const [product, setProduct] = useState(null);
+
+  // useEffect(() => {
+  //   const fetchProduct = async () => {
+  //     try {
+  //       const response = await axios.get(
+  //         `https://put-print-ky689.ondigitalocean.app/api/products/${id}/`
+  //       );
+  //       const productData = response.data;
+  //       setProduct(productData);
+  //     } catch (error) {
+  //       setError("Məhsulu yükləyərkən xəta baş verdi.");
+  //       console.error("Error fetching product:", error);
+  //     }
+  //   };
+
+  //   fetchProduct();
+  // }, [id]);
 
   function base64ToFile(base64, filename) {
     const arr = base64.split(','); 

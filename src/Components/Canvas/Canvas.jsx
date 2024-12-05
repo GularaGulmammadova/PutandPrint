@@ -12,13 +12,13 @@ import {
   Rect,
 } from "react-konva";
 
-const Canvas = ({ product,id }) => {
+const Canvas = ({ material, setMaterial, size, setSize, product,id, cvsHeight, cvsWidth, frontContent, setFrontContent, backContent, setBackContent}) => {
   const stageRef = useRef(null);
 
   const [imageNode, setImageNode] = useState(null);
   const [labelNode, setLabelNode] = useState(null);
-  const [cvsWidth, setCvsWidth] = useState(window.innerWidth / 2);
-  const [cvsHeight, setCvsHeight] = useState((window.innerHeight / 10) * 8);
+  // const [cvsWidth, setCvsWidth] = useState(window.innerWidth / 2);
+  // const [cvsHeight, setCvsHeight] = useState((window.innerHeight / 10) * 8);
   const [showTrasformer, setShowTransformer] = useState(false);
   const [showTrasformerL, setShowTransformerL] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -27,20 +27,20 @@ const Canvas = ({ product,id }) => {
     setShowTransformer(true);
   };
 
-  useEffect(() => {
-    const handleResize = () => {
-      setCvsWidth(window.innerWidth / 2);
-      setCvsHeight((window.innerHeight / 10) * 8);
-    };
+  // useEffect(() => {
+  //   const handleResize = () => {
+  //     setCvsWidth(window.innerWidth / 2);
+  //     setCvsHeight((window.innerHeight / 10) * 8);
+  //   };
 
 
-    window.addEventListener("resize", handleResize);
+  //   window.addEventListener("resize", handleResize);
 
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
+  //   return () => {
+  //     window.removeEventListener("resize", handleResize);
+  //   };
     
-  }, []);
+  // }, []);
 
   const [showFront, setShowFront] = useState(true);
 
@@ -49,54 +49,54 @@ const Canvas = ({ product,id }) => {
   const [imageSrc, setImageSrc] = useState(null);
   const [imageSrcBack, setImageSrcBack] = useState(null);
 
-  const [backContent, setBackContent] = useState({
-    screenshot: 'null',
-    tshirtColor: "white",
-    image: {
-      value: "",
-      width: cvsWidth / 8,
-      height: cvsWidth / 8,
-      rotation: 0,
-      x: (7 * (cvsWidth / 2)) / 8,
-      y: cvsHeight / 2 - cvsWidth / 16 - 20,
-    },
-    label: {
-      title: "",
-      tshirtLabel: "",
-      width: cvsWidth / 8,
-      height: 20,
-      fontFamily: "Arial",
-      fontSize: 20,
-      rotation: 0,
-      color: "black",
-      x: (7 * (cvsWidth / 2)) / 8,
-      y: cvsHeight / 2 - cvsWidth / 16 - 20,
-    },
-  });
+  // const [backContent, setBackContent] = useState({
+  //   screenshot: 'null',
+  //   tshirtColor: "white",
+  //   image: {
+  //     value: "",
+  //     width: cvsWidth / 8,
+  //     height: cvsWidth / 8,
+  //     rotation: 0,
+  //     x: (7 * (cvsWidth / 2)) / 8,
+  //     y: cvsHeight / 2 - cvsWidth / 16 - 20,
+  //   },
+  //   label: {
+  //     title: "",
+  //     tshirtLabel: "",
+  //     width: cvsWidth / 8,
+  //     height: 20,
+  //     fontFamily: "Arial",
+  //     fontSize: 20,
+  //     rotation: 0,
+  //     color: "black",
+  //     x: (7 * (cvsWidth / 2)) / 8,
+  //     y: cvsHeight / 2 - cvsWidth / 16 - 20,
+  //   },
+  // });
 
-  const [frontContent, setFrontContent] = useState({
-    tshirtColor: "white",
-    screenshot: 'null',
-    image: {
-      value: "",
-      width: cvsWidth / 8,
-      height: cvsWidth / 8,
-      rotation: 0,
-      x: (7 * (cvsWidth / 2)) / 8,
-      y: cvsHeight / 2 - cvsWidth / 16 - 20,
-    },
+  // const [frontContent, setFrontContent] = useState({
+  //   tshirtColor: "white",
+  //   screenshot: 'null',
+  //   image: {
+  //     value: "",
+  //     width: cvsWidth / 8,
+  //     height: cvsWidth / 8,
+  //     rotation: 0,
+  //     x: (7 * (cvsWidth / 2)) / 8,
+  //     y: cvsHeight / 2 - cvsWidth / 16 - 20,
+  //   },
 
-    label: {
-      title: "",
-      tshirtLabel: "",
-      fontFamily: "Arial",
-      fontSize: 20,
-      rotation: 0,
-      color: "black",
-      x: (7 * (cvsWidth / 2)) / 8,
-      y: cvsHeight / 2 - cvsWidth / 16 - 20,
-    },
-  });
+  //   label: {
+  //     title: "",
+  //     tshirtLabel: "",
+  //     fontFamily: "Arial",
+  //     fontSize: 20,
+  //     rotation: 0,
+  //     color: "black",
+  //     x: (7 * (cvsWidth / 2)) / 8,
+  //     y: cvsHeight / 2 - cvsWidth / 16 - 20,
+  //   },
+  // });
 
   const handleTransform = (e) => {
     const node = e.target;
@@ -598,6 +598,10 @@ const Canvas = ({ product,id }) => {
         captureScreenshot={captureScreenshot}
         submitDesign={submitDesign}
         downloadDesign={downloadDesign}
+        material={material} 
+        setMaterial={setMaterial} 
+        size={size} 
+        setSize={setSize}
       />
     </div>
   );
