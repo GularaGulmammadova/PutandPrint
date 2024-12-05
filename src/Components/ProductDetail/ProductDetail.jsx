@@ -1,19 +1,19 @@
-// eslint-disable-next-line no-unused-vars
-import React, { useEffect, useState } from "react";
+/* eslint-disable react/prop-types */
+import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import axios from "axios";
 import "./ProductDetail.css";
 import { Link } from "react-router-dom";
 
-const ProductDetail = () => {
+const ProductDetail = ({frontContent, setFrontContent, backContent, setBackContent, material, setMaterial, size, setSize}) => {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [mainImage, setMainImage] = useState("");
-  // const [activeImage, setActiveImage] = useState(0); 
   const [selectedColor, setSelectedColor] = useState("");
-  const [activeSize, setActiveSize] = useState("");
-  const [activeThreads, setActiveThreads] = useState("");
   const [error, setError] = useState(null);
+  const sizes = ['S', 'M', 'L', 'XL', '2XL'];
+  const materials = ['Nazik', 'Qalın']; 
+
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -46,6 +46,8 @@ const ProductDetail = () => {
 
   const handleThumbnailClick = (image, index) => {
     setMainImage(image);
+    index===0 ? setFrontContent({...frontContent, tshirtColor: 'white'}) : setFrontContent({...frontContent, tshirtColor: 'black'});
+    index===0 ? setBackContent({...backContent, tshirtColor: 'white'}) : setBackContent({...backContent, tshirtColor: 'black'});
     // setActiveImage(index);
     index===0 ? setSelectedColor('white') : setSelectedColor('black');
   };
@@ -68,11 +70,11 @@ const ProductDetail = () => {
   // };
 
   const handleSizeClick = (size) => {
-    setActiveSize(size);
+    setSize(size)
   };
 
   const handleThreadsClick = (threads) => {
-    setActiveThreads(threads);
+    setMaterial(threads);
   };
 
   if (error) {
@@ -170,11 +172,11 @@ const ProductDetail = () => {
               <div className="threads-variants">
                 <p>Material</p>
                 <div className="threads">
-                  {product.threads.split(",").map((threads) => (
+                  {materials.map((threads) => (
                     <button
                       key={threads}
                       className={`threads-box ${
-                        activeThreads === threads ? "active-threads" : ""
+                        material === threads ? "active-threads" : ""
                       }`}
                       onClick={() => handleThreadsClick(threads)}
                     >
@@ -188,15 +190,15 @@ const ProductDetail = () => {
               <div className="size-variants">
                 <p>Ölçü</p>
                 <div className="sizes">
-                  {product.sizes.split(",").map((size) => (
+                  {sizes.map((s) => (
                     <button
-                      key={size}
+                      key={s}
                       className={`size-box ${
-                        activeSize === size ? "active-size" : ""
+                        s === size ? "active-size" : ""
                       }`}
-                      onClick={() => handleSizeClick(size)}
+                      onClick={() => handleSizeClick(s)}
                     >
-                      {size}
+                      {s}
                     </button>
                   ))}
                 </div>
