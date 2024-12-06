@@ -4,6 +4,8 @@ import "./HomePage.css";
 import { Link, useNavigate } from "react-router-dom";
 import homepageclothing from "./../../site assets/homepageclothing.png";
 import homepagelogo from "./../../site assets/homepagelogo.png";
+import homepagelogo2 from "./../../site assets/logo and icons/Asset2logo.png";
+import homepagelogo3 from "./../../site assets/logo and icons/Asset1logos.png";
 import axios from "axios";
 
 const HomePage = () => {
@@ -122,15 +124,116 @@ const HomePage = () => {
         >
           <div className="slider-logos">
             <div className="slide-track">
-              {[...Array(15)].map((_, index) => (
-                <div className="slide" key={index}>
+                <div className="slide">
                   <img
                     src={homepagelogo}
                     alt="Brand logo"
                     className="slide-img"
                   />
                 </div>
-              ))}
+                <div className="slide">
+                  <img
+                    src={homepagelogo2}
+                    alt="Brand logo"
+                    className="slide-img"
+                  />
+                </div>
+                <div className="slide">
+                  <img
+                    src={homepagelogo3}
+                    alt="Brand logo"
+                    className="slide-img"
+                    id="slide-3"
+                  />
+                </div>
+                <div className="slide">
+                  <img
+                    src={homepagelogo}
+                    alt="Brand logo"
+                    className="slide-img"
+                  />
+                </div>
+                <div className="slide">
+                  <img
+                    src={homepagelogo2}
+                    alt="Brand logo"
+                    className="slide-img"
+                  />
+                </div>
+                <div className="slide">
+                  <img
+                    src={homepagelogo3}
+                    alt="Brand logo"
+                    className="slide-img"
+                    id="slide-3"
+                  />
+                </div>
+                <div className="slide">
+                  <img
+                    src={homepagelogo}
+                    alt="Brand logo"
+                    className="slide-img"
+                  />
+                </div>
+                <div className="slide">
+                  <img
+                    src={homepagelogo2}
+                    alt="Brand logo"
+                    className="slide-img"
+                  />
+                </div>
+                <div className="slide">
+                  <img
+                    src={homepagelogo3}
+                    alt="Brand logo"
+                    className="slide-img"
+                    id="slide-3"
+                  />
+                </div>
+                <div className="slide">
+                  <img
+                    src={homepagelogo}
+                    alt="Brand logo"
+                    className="slide-img"
+                  />
+                </div>
+                <div className="slide">
+                  <img
+                    src={homepagelogo2}
+                    alt="Brand logo"
+                    className="slide-img"
+                  />
+                </div>
+                <div className="slide">
+                  <img
+                    src={homepagelogo3}
+                    alt="Brand logo"
+                    className="slide-img"
+                    id="slide-3"
+                  />
+                </div>
+                <div className="slide">
+                  <img
+                    src={homepagelogo}
+                    alt="Brand logo"
+                    className="slide-img"
+                  />
+                </div>
+                <div className="slide">
+                  <img
+                    src={homepagelogo2}
+                    alt="Brand logo"
+                    className="slide-img"
+                  />
+                </div>
+                <div className="slide">
+                  <img
+                    src={homepagelogo3}
+                    alt="Brand logo"
+                    className="slide-img"
+                    id="slide-3"
+                  />
+                </div>
             </div>
           </div>
         </Link>

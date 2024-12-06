@@ -340,6 +340,10 @@ hr {
   transition: transform 1s;
 }
 
+.slide #slide-3{
+  width: 80px;
+}
+
 img:hover{
   transform: translateZ(20px);
 }
