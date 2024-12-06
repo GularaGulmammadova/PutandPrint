@@ -1,19 +1,28 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useEffect, useState } from "react";
-import "./ProductCheck.css";
+import "./PreparedCheck.css";
 import { useParams } from "react-router";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
-const ProductCheck = () => {
+const PreparedCheck = () => {
   const { id } = useParams();
+  const [quantity, setQuantity] = useState(1);
+  const [selectedColor, setSelectedColor] = useState("white"); 
   const [data, setData] = useState();
-  const [product, setProduct] = useState();
+
+  const handleQuantityChange = (e) => {
+    setQuantity(e.target.value);
+  };
+
+  const handleColorChange = (e) => {
+    setSelectedColor(e.target.value);
+  };
 
   const getOrdering = async (id) => {
     try {
       const response = await axios.get(
-        `https://put-print-ky689.ondigitalocean.app/api/orders/${id}/`
+        `https://put-print-ky689.ondigitalocean.app/api/products/${id}/`
       );
       setData(response.data);
     } catch (error) {
@@ -21,29 +30,13 @@ const ProductCheck = () => {
     }
   };
 
-  const getProduct = async (id) => {
-    try {
-      const response = await axios.get(
-        `https://put-print-ky689.ondigitalocean.app/api/products/${id}/`
-      );
-      setProduct(response.data);
-    } catch (error) {
-      console.log("Error fetching product data:", error);
-    }
-  };
-
   useEffect(() => {
     getOrdering(id);
-    // getProduct(id);
   }, [id]);
-
-  useEffect(() => {
-    data && data.product && getProduct(data.product);
-  }, [data]);
 
   if (!data) {
     return (
-      <div 
+      <div
         style={{
           display: "flex",
           justifyContent: "center",
@@ -75,21 +68,32 @@ const ProductCheck = () => {
   }
 
   
-  const showColorOptions = data.product >= 1 && data.product <= 14;
+  const renderImage = () => {
+    if (data.id >= 7 && data.id <= 14) {
+      return selectedColor === "black" ? data.black_front : data.front;
+    } else if (data.id >= 1 && data.id <= 6) {
+      if (selectedColor === "black" && data.id !== 6) {
+        return data.black_front || "default-black.png";
+      }
+      return data.front || "default-white.png";
+    } else {
+      return "default-image.png";
+    }
+  };
 
-  const sizes = ['S', 'M', 'L', 'XL', '2XL']
+  
+  const showColorOptions = data.id >= 1 && data.id <= 14;
 
   return (
     <div className="container" style={{ width: "100%", maxWidth: "800px" }}>
       <div className="product-check-box">
-        <div className="check-box-heading">{product && product?.name}</div>
+        <div className="check-box-heading">Məhsullar</div>
         <hr style={{ border: "1px solid #DEDEDE" }} />
         <div className="check-boxes">
           <div className="product-check-item-image">
             <img
             style={{height: "auto", objectFit: "cover"}}
-              // src={renderImage()}
-              src={data.front_mockup}
+              src={renderImage()}
               alt={data?.name || "Product Image"}
               className="product-image"
             />
@@ -101,9 +105,9 @@ const ProductCheck = () => {
                 <div className="check-boxes-option">
                   <label>Rəng</label>
                   <select
-                    value={data.color.toLowerCase()}
-                    // disabled={data.id === 6} 
-                    disabled={true}
+                    value={selectedColor}
+                    onChange={handleColorChange}
+                    disabled={data.id === 6} 
                   >
                     <option value="white">Ağ</option>
                     {data.id !== 6 && (
@@ -113,31 +117,34 @@ const ProductCheck = () => {
                 </div>
               )}
               <div className="check-boxes-option">
-                <label className="smallTitle">Ölçü</label>
-                <select disabled={true}>
-                  {sizes.map((s,i) => s===data.size ? <option selected="selected" key={i}>{s}</option> : <option key={i}>{s}</option>)}
+                <label>Ölçü</label>
+                <select>
+                  <option>S</option>
+                  <option>M</option>
+                  <option>L</option>
+                  <option>XL</option>
+                  <option>2XL</option>
                 </select>
-                
               </div>
             </div>
             <div className="check-box-info">
               <div className="prices-title">Qiyməti</div>
               <div className="product-prices">
-                {data.material==='NAZIK' ? product?.price_thin : product?.price_thick} ×
+                {data?.price_display} ×
                 <input
-                  disabled={true}
                   type="number"
-                  value={data.quantity}
+                  value={quantity}
+                  onChange={handleQuantityChange}
                   className="check-quantity-input"
                   min="1"
                 />
                 <div className="product-totally-price">
-                  = {(data.material==='NAZIK' ? product?.price_thin : product?.price_thick)* data.quantity} ₼
+                  {data?.price * quantity} ₼
                 </div>
               </div>
             </div>
           </div>
-        </div> 
+        </div>
         <Link
           to=""
           onClick={(e) => {
@@ -156,6 +163,6 @@ const ProductCheck = () => {
       </div>
     </div>
   );
-}; 
+};
 
-export default ProductCheck;
+export default PreparedCheck;

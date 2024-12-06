@@ -12,6 +12,7 @@ import Corporate from './Components/Corporate/Corporate'
 import ScrollToTop from './ScrollToTop/ScrollToTop'
 import ProductCheck from './Components/ProductCheck/ProductCheck'
 import Designer from './Components/Designer/Designer'
+import PreparedCheck from './Components/PreparedCheck/PreparedCheck'
 // import Loading from './Components/Loading/Loading'
  
 const App = () => {
@@ -109,6 +110,7 @@ const App = () => {
         <Route path='/about' element={<About />} />
         <Route path='/contact' element={<Contact />} />
         <Route path='/productcheck/:id' element={<ProductCheck/>}/> 
+        <Route path='/preparedcheck/:id' element={<PreparedCheck/>}/> 
         <Route path='/designer/:id' element={<Designer material={material} setMaterial={setMaterial} size={size} setSize={setSize} cvsWidth={cvsWidth} setCvsWidth={setCvsWidth} cvsHeight={cvsHeight} setCvsHeight={setCvsHeight} frontContent={frontContent} setFrontContent={setFrontContent} backContent={backContent} setBackContent={setBackContent} />}/>
       </Routes>
       {!location.pathname.includes('/designer') && <Footer />}

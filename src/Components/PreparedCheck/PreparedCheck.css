@@ -1,0 +1,204 @@
+.container {
+    /* width: 100%;
+      max-width: 800px; */
+    margin: 0 auto;
+  }
+  
+  .smallTitle {
+    margin-right: 20px;
+  }
+  
+  .product-check-box {
+    border: 1px solid #dedede;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 120px;
+    margin-top: 60px;
+  }
+  
+  .product-check-box .check-box-heading {
+    width: 100%;
+    max-width: 698px;
+    height: 29px;
+    font-weight: 500;
+    font-size: 24px;
+    color: #000000;
+    padding: 20px 51px 20px 51px;
+  }
+  
+  .product-check-box .check-boxes {
+    width: 100%;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+  }
+  
+  .product-check-box .check-boxes .check-box-title {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 380px;
+    height: 22px;
+    font-weight: 600;
+    font-size: 18px;
+    color: #000;
+  }
+  
+  .product-check-box img {
+    width: 177px;
+    height: 132px;
+    object-fit: cover;
+    border: 1px solid #dedede;
+    border-radius: 6px;
+  }
+  
+  .product-check-item-image img {
+    object-fit: cover; 
+  }
+  
+  .product-check-item-image img.front-image {
+    height: 190px; 
+  }
+  
+  .product-check-item-image img.main-image {
+    height: 132px; 
+  }
+  
+  .check-boxes .delete-btn {
+    width: 24px;
+    font-size: 18px;
+    color: #000;
+    cursor: pointer;
+  }
+  .check-box-info {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-bottom: 50px;
+  }
+  
+  /* .colors {
+    width: 100%;
+    margin-top: 5px;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #dedede;
+    border-radius: 6px;
+    max-width: 143px;
+    height: 44px;
+    background-color: #fff;
+    cursor: pointer;
+  }
+  
+  .colors:focus {
+    outline: none;
+  } */
+  
+  .check-box-info .color-title,
+  .check-box-info .sizes-title {
+    display: flex;
+    flex-direction: column;
+    color: #000000;
+    font-size: 18px;
+    font-weight: 500;
+  }
+  
+  .check-boxes-options {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .check-boxes-option select:focus {
+    outline: none;
+  }
+  
+  .check-boxes-option label {
+    font-weight: 400;
+    font-size: 18px;
+    color: #161515;
+  }
+  
+  .check-boxes-option select {
+    font-weight: 400;
+    font-size: 18px;
+    width: 143px;
+    height: 44px;
+    padding: 5px;
+    border-radius: 6px;
+    border: 1px solid #dedede;
+  }
+  
+  .check-boxes-desc {
+    width: 100%;
+    max-width: 351px;
+    height: 201px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 30px;
+    gap: 40px;
+  }
+  
+  .check-box-info {
+    width: 325px;
+    height: 32px;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+  }
+  
+  .check-box-info .prices-title {
+    font-weight: 400;
+    font-size: 20px;
+    color: #000000;
+  }
+  
+  .check-box-info .check-quantity-input {
+    width: 39px;
+    height: 32px;
+    border-radius: 4px;
+    border: 1px solid #dedede;
+    padding: 5px;
+    margin-top: -4px;
+  }
+  
+  .check-box-info .product-prices {
+    /* max-width: 171px; */
+    height: 32px;
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    margin-top: 5px;
+    font-weight: 500;
+    font-size: 18px;
+    color: #161515;
+  }
+  
+  .checkout-btn {
+    width: 484px;
+    height: 57px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ff810c;
+    color: #fff;
+    border-radius: 8px;
+    padding: 12px 14px 12px 14px;
+    border: none;
+    margin-bottom: 50px;
+    margin-left: 70px;
+    cursor: pointer;
+  }
+  
+  .checkout-text {
+    display: flex;
+    flex-direction: column;
+    font-weight: 500;
+    font-size: 18px;
+    text-align: center;
+    align-items: center;
+    margin-top: 4px;
+  }
