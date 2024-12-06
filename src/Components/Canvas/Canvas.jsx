@@ -12,7 +12,7 @@ import {
   Rect,
 } from "react-konva";
 
-const Canvas = ({ material, setMaterial, size, setSize, product,id, cvsHeight, cvsWidth, frontContent, setFrontContent, backContent, setBackContent}) => {
+const Canvas = ({  initialFront, initialBack, material, setMaterial, size, setSize, product,id, cvsHeight, cvsWidth, frontContent, setFrontContent, backContent, setBackContent}) => {
   const stageRef = useRef(null);
 
   const [imageNode, setImageNode] = useState(null);
@@ -527,6 +527,10 @@ const Canvas = ({ material, setMaterial, size, setSize, product,id, cvsHeight, c
         </Stage>
       </div>
       <ManageFiles
+        initialFront={initialFront} 
+        initialBack={initialBack}
+        setFrontContent={setFrontContent}
+        setBackContent={setBackContent}
         id={id}
         product={product}
         // handleDownload={handleDownload}

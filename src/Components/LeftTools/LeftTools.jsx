@@ -12,42 +12,24 @@ import AI from "../AI/AI";
 const LeftTools = ({ setContent, content, deleteImg, handleImageChange, setShowTransformer,}) => {
   const [chosen, setChosen] = useState("Yüklə");
   const fileInputRef = useRef(null);
+  const fileInputRef2 = useRef(null);
 
   const handleFileButtonClick = () => {
-    fileInputRef.current.click();
+    content.tshirtColor === 'white' ? fileInputRef.current.click() : fileInputRef2.current.click();
   }; 
 
   const deleteImgAndFile = () => {
     deleteImg();
-    fileInputRef.current.value = null;
+    content.tshirtColor === 'white' ? fileInputRef.current.value = null : fileInputRef2.current.value = null;
   };
-
-  // const handleSubmitImage = async (file) => {
-  //   const formData = new FormData();
-  //   formData.append("image", file);
-  //   formData.append("asset_type", "image");
-  //   formData.append("order_item", orderItemId);
-
-  //   try {
-  //     const response = await axios.post(
-  //       `/api/orderitems/${orderItemId}/customization`,
-  //       formData,
-  //       {
-  //         headers: { "Content-Type": "application/json/form-data" },
-  //       }
-  //     );
-  //     console.log("Image customized successfully:", response.data);
-  //   } catch (error) {
-  //     console.error("Error customizing image:", error);
-  //   }
-  // };
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
       handleImageChange(e);
-      // handleSubmitImage(file);
     }
+    fileInputRef.current.value = null;
+    fileInputRef2.current.value = null;
   };
 
   return (
@@ -75,13 +57,21 @@ const LeftTools = ({ setContent, content, deleteImg, handleImageChange, setShowT
       <div className={styles.container}>
         <div className={chosen === "Yüklə" ? styles.choiceImg : styles.none}>
           <h3 className={styles.title}>Şəkil seçin</h3>
+          {content.tshirtColor==='white' ? 
           <input
             ref={fileInputRef}
             id="fileInput"
             onChange={(e) => handleFileChange(e)}
             className={styles.none}
             type="file"
-          />
+          /> : 
+          <input
+            ref={fileInputRef2}
+            id="fileInput2"
+            onChange={(e) => handleFileChange(e)}
+            className={styles.none}
+            type="file"
+          />}
           <button onClick={handleFileButtonClick} className={styles.btn}>
             Şəkil seçin
           </button>

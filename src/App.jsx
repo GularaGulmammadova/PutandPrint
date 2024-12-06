@@ -39,7 +39,7 @@ const App = () => {
     
   }, []);
 
-  const [backContent, setBackContent] = useState({
+  const initialBack = {
     screenshot: 'null',
     tshirtColor: "white",
     image: {
@@ -62,9 +62,9 @@ const App = () => {
       x: (7 * (cvsWidth / 2)) / 8,
       y: cvsHeight / 2 - cvsWidth / 16 - 20,
     },
-  });
+  }
 
-  const [frontContent, setFrontContent] = useState({
+  const initialFront = {
     tshirtColor: "white",
     screenshot: 'null',
     image: {
@@ -86,7 +86,11 @@ const App = () => {
       x: (7 * (cvsWidth / 2)) / 8,
       y: cvsHeight / 2 - cvsWidth / 16 - 20,
     },
-  });
+  }
+
+  const [backContent, setBackContent] = useState(initialBack);
+
+  const [frontContent, setFrontContent] = useState(initialFront);
 
   // const [loading, setLoading] = useState(true);
 
@@ -111,7 +115,7 @@ const App = () => {
         <Route path='/contact' element={<Contact />} />
         <Route path='/productcheck/:id' element={<ProductCheck/>}/> 
         <Route path='/preparedcheck/:id' element={<PreparedCheck/>}/> 
-        <Route path='/designer/:id' element={<Designer material={material} setMaterial={setMaterial} size={size} setSize={setSize} cvsWidth={cvsWidth} setCvsWidth={setCvsWidth} cvsHeight={cvsHeight} setCvsHeight={setCvsHeight} frontContent={frontContent} setFrontContent={setFrontContent} backContent={backContent} setBackContent={setBackContent} />}/>
+        <Route path='/designer/:id' element={<Designer initialFront={initialFront} initialBack={initialBack} material={material} setMaterial={setMaterial} size={size} setSize={setSize} cvsWidth={cvsWidth} setCvsWidth={setCvsWidth} cvsHeight={cvsHeight} setCvsHeight={setCvsHeight} frontContent={frontContent} setFrontContent={setFrontContent} backContent={backContent} setBackContent={setBackContent} />}/>
       </Routes>
       {!location.pathname.includes('/designer') && <Footer />}
     </div>
