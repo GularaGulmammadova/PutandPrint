@@ -110,7 +110,7 @@ const App = () => {
         <Route path='/' element={<HomePage />} />
         <Route path='/corporate' element={<Corporate/>}/>
         <Route path='/products' element={<Products />} />
-        <Route path='/productdetail/:id' element={<ProductDetail material={material} setMaterial={setMaterial} size={size} setSize={setSize} cvsWidth={cvsWidth} setCvsWidth={setCvsWidth} cvsHeight={cvsHeight} setCvsHeight={setCvsHeight} frontContent={frontContent} setFrontContent={setFrontContent} backContent={backContent} setBackContent={setBackContent} />} />
+        <Route path='/productdetail/:id' element={<ProductDetail initialFront={initialFront} initialBack={initialBack} material={material} setMaterial={setMaterial} size={size} setSize={setSize} cvsWidth={cvsWidth} setCvsWidth={setCvsWidth} cvsHeight={cvsHeight} setCvsHeight={setCvsHeight} frontContent={frontContent} setFrontContent={setFrontContent} backContent={backContent} setBackContent={setBackContent} />} />
         <Route path='/about' element={<About />} />
         <Route path='/contact' element={<Contact />} />
         <Route path='/productcheck/:id' element={<ProductCheck/>}/> 
