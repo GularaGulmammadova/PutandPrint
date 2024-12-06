@@ -6,30 +6,34 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios'; 
 
 const ManageFiles = ({ size, setSize, frontContent, material, setMaterial, backContent, setColor, product, downloadDesign, id, captureScreenshot }) => {
-  // const [size, setSize] = useState('S');
-  // const [material, setMaterial] = useState('Nazik'); 
   const [quantity, setQuantity] = useState(1); 
   const navigate = useNavigate();
   const sizes = ['S', 'M', 'L', 'XL', '2XL'];
   const materials = ['Nazik', 'Qalın']; 
-  // const [product, setProduct] = useState(null);
 
-  // useEffect(() => {
-  //   const fetchProduct = async () => {
-  //     try {
-  //       const response = await axios.get(
-  //         `https://put-print-ky689.ondigitalocean.app/api/products/${id}/`
-  //       );
-  //       const productData = response.data;
-  //       setProduct(productData);
-  //     } catch (error) {
-  //       setError("Məhsulu yükləyərkən xəta baş verdi.");
-  //       console.error("Error fetching product:", error);
-  //     }
-  //   };
+  async function convertImageToBase64(imageUrl) {
+    try {
+        const response = await fetch(imageUrl);
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        const blob = await response.blob();
+        const reader = new FileReader();
 
-  //   fetchProduct();
-  // }, [id]);
+        return new Promise((resolve, reject) => {
+            reader.onloadend = () => {
+                resolve(reader.result);
+            };
+            reader.onerror = () => {
+                reject(new Error('Error reading blob as base64'));
+            };
+            reader.readAsDataURL(blob);
+        });
+    } catch (error) {
+        console.error('Error converting image to Base64:', error);
+        throw error; // Re-throw error to handle it outside if necessary
+    }
+}
 
   function base64ToFile(base64, filename) {
     const arr = base64.split(','); 
@@ -54,15 +58,38 @@ const ManageFiles = ({ size, setSize, frontContent, material, setMaterial, backC
     captureScreenshot();
     const formData = new FormData();
 
+    console.log(product.front);
+    // console.log(backContent.screenshot);
+
+    const emptyWhite = await convertImageToBase64(product.front);
+    const emptyBlack = await convertImageToBase64(product.black_front);
+
+    const emptyWhite64 = base64ToFile(emptyWhite, 'empty.png');
+    const emptyBlack64 = base64ToFile(emptyBlack, 'emptyb.png');
+
+    console.log(emptyWhite)
+    
     const frontImageFile = frontContent.image.value && frontContent.image.value.src ? base64ToFile(frontContent.image.value.src, 'frontImage.png') : base64ToFile(frontContent.screenshot, 'frontMockup.png');
     const backImageFile = backContent.image.value && backContent.image.value.src ? base64ToFile(backContent.image.value.src, 'backImage.png') : base64ToFile(frontContent.screenshot, 'frontMockup.png');
     const frontMockupFile = base64ToFile(frontContent.screenshot, 'frontMockup.png');
     const backMockupFile = backContent.screenshot ? base64ToFile(backContent.screenshot, 'backMockup.png') : base64ToFile(frontContent.screenshot, 'frontMockup.png');
   
-    formData.append('front_image', frontImageFile);
-    formData.append('back_image', backImageFile);
-    formData.append('front_mockup', frontMockupFile);
-    formData.append('back_mockup', backMockupFile || frontMockupFile);
+    if (frontContent.image.value === '' && frontContent.label.title === '' && backContent.image.value === '' && backContent.label.title === '' && backContent.tshirtColor === 'white'){
+      formData.append('front_image', emptyWhite64);
+      formData.append('back_image', emptyWhite64);
+      formData.append('front_mockup', emptyWhite64);
+      formData.append('back_mockup', emptyWhite64);
+    } else if (frontContent.image.value === '' && frontContent.label.title === '' && backContent.image.value === '' && backContent.label.title === '' && backContent.tshirtColor === 'black'){
+      formData.append('front_image', emptyBlack64);
+      formData.append('back_image', emptyBlack64);
+      formData.append('front_mockup', emptyBlack64);
+      formData.append('back_mockup', emptyBlack64);
+    } else {
+      formData.append('front_image', frontImageFile);
+      formData.append('back_image', backImageFile);
+      formData.append('front_mockup', backImageFile);
+      formData.append('back_mockup', backMockupFile || frontMockupFile);
+    }
   
     const orderData = {
       color: frontContent.tshirtColor.toUpperCase(),
@@ -85,7 +112,6 @@ const ManageFiles = ({ size, setSize, frontContent, material, setMaterial, backC
     formData.append('text_font', orderData.text_font);
     formData.append('status', orderData.status);
     formData.append('product', String(orderData.product));
-  
     try {
       const response = await axios.post(
         'https://put-print-ky689.ondigitalocean.app/api/orders/',
@@ -98,7 +124,6 @@ const ManageFiles = ({ size, setSize, frontContent, material, setMaterial, backC
           },
         }
       );
-  
       console.log("Sifariş uğurla yaradıldı:", response.data);
       if (response.data.id) navigate(`/productcheck/${response.data.id}`);
     } catch (error) {
@@ -163,8 +188,8 @@ const ManageFiles = ({ size, setSize, frontContent, material, setMaterial, backC
 
         <div className={styles.spaceBetween}>
           <h3 className={styles.title}>Ümumi Qiymət</h3>
-          {!product.minPrice && <h3 className={styles.title}>{product.price}</h3>}
-          {product.minPrice && <h3 className={styles.title}>{material === 'Nazik' ? product.minPrice : product.maxPrice}</h3>}
+          {!product.price_thin && <h3 className={styles.title}>{product.price_display}</h3>}
+          {product.price_thin && <h3 className={styles.title}>{material === 'Nazik' ? product.price_thin : product.price_thick}</h3>}
         </div>
 
         <div className={styles.spaceBetween}>

@@ -17,8 +17,6 @@ const Canvas = ({ material, setMaterial, size, setSize, product,id, cvsHeight, c
 
   const [imageNode, setImageNode] = useState(null);
   const [labelNode, setLabelNode] = useState(null);
-  // const [cvsWidth, setCvsWidth] = useState(window.innerWidth / 2);
-  // const [cvsHeight, setCvsHeight] = useState((window.innerHeight / 10) * 8);
   const [showTrasformer, setShowTransformer] = useState(false);
   const [showTrasformerL, setShowTransformerL] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -26,77 +24,13 @@ const Canvas = ({ material, setMaterial, size, setSize, product,id, cvsHeight, c
   const handleImageClick = () => {
     setShowTransformer(true);
   };
-
-  // useEffect(() => {
-  //   const handleResize = () => {
-  //     setCvsWidth(window.innerWidth / 2);
-  //     setCvsHeight((window.innerHeight / 10) * 8);
-  //   };
-
-
-  //   window.addEventListener("resize", handleResize);
-
-  //   return () => {
-  //     window.removeEventListener("resize", handleResize);
-  //   };
-    
-  // }, []);
-
+  
   const [showFront, setShowFront] = useState(true);
 
   const [tShirt, setTshirt] = useState(null);
   const [backTshirt, setBackTshirt] = useState(null);
   const [imageSrc, setImageSrc] = useState(null);
   const [imageSrcBack, setImageSrcBack] = useState(null);
-
-  // const [backContent, setBackContent] = useState({
-  //   screenshot: 'null',
-  //   tshirtColor: "white",
-  //   image: {
-  //     value: "",
-  //     width: cvsWidth / 8,
-  //     height: cvsWidth / 8,
-  //     rotation: 0,
-  //     x: (7 * (cvsWidth / 2)) / 8,
-  //     y: cvsHeight / 2 - cvsWidth / 16 - 20,
-  //   },
-  //   label: {
-  //     title: "",
-  //     tshirtLabel: "",
-  //     width: cvsWidth / 8,
-  //     height: 20,
-  //     fontFamily: "Arial",
-  //     fontSize: 20,
-  //     rotation: 0,
-  //     color: "black",
-  //     x: (7 * (cvsWidth / 2)) / 8,
-  //     y: cvsHeight / 2 - cvsWidth / 16 - 20,
-  //   },
-  // });
-
-  // const [frontContent, setFrontContent] = useState({
-  //   tshirtColor: "white",
-  //   screenshot: 'null',
-  //   image: {
-  //     value: "",
-  //     width: cvsWidth / 8,
-  //     height: cvsWidth / 8,
-  //     rotation: 0,
-  //     x: (7 * (cvsWidth / 2)) / 8,
-  //     y: cvsHeight / 2 - cvsWidth / 16 - 20,
-  //   },
-
-  //   label: {
-  //     title: "",
-  //     tshirtLabel: "",
-  //     fontFamily: "Arial",
-  //     fontSize: 20,
-  //     rotation: 0,
-  //     color: "black",
-  //     x: (7 * (cvsWidth / 2)) / 8,
-  //     y: cvsHeight / 2 - cvsWidth / 16 - 20,
-  //   },
-  // });
 
   const handleTransform = (e) => {
     const node = e.target;
@@ -189,6 +123,7 @@ const Canvas = ({ material, setMaterial, size, setSize, product,id, cvsHeight, c
         setImageSrc(event.target.result);
         const img = new Image();
         img.src = event.target.result;
+        img.crossOrigin = 'Anonymous';
         setFrontContent({
           ...frontContent,
           image: { ...frontContent.image, value: img },
@@ -206,6 +141,7 @@ const Canvas = ({ material, setMaterial, size, setSize, product,id, cvsHeight, c
         setImageSrcBack(event.target.result);
         const img = new Image();
         img.src = event.target.result;
+        img.crossOrigin = 'Anonymous';
         setBackContent({
           ...backContent,
           image: { ...backContent.image, value: img },
@@ -247,7 +183,9 @@ const Canvas = ({ material, setMaterial, size, setSize, product,id, cvsHeight, c
       img.src =
         frontContent.tshirtColor === "white"
           ? product.front
-          : product.blackFront;
+          : product.black_front;
+          
+      img.crossOrigin = 'Anonymous'
       img.onload = () => {
         setTshirt(img);
       };
@@ -256,7 +194,9 @@ const Canvas = ({ material, setMaterial, size, setSize, product,id, cvsHeight, c
     if (product.back) {
       const backImg = new window.Image();
       backImg.src =
-        backContent.tshirtColor === "white" ? product.back : product.blackBack;
+        backContent.tshirtColor === "white" ? product.back : product.black_back;
+      
+      backImg.crossOrigin = 'Anonymous'
       backImg.onload = () => {
         setBackTshirt(backImg);
       };
@@ -268,6 +208,8 @@ const Canvas = ({ material, setMaterial, size, setSize, product,id, cvsHeight, c
     if (imageSrc) {
       const img = new Image();
       img.src = imageSrc;
+      
+      img.crossOrigin = 'Anonymous'
       setFrontContent({
         ...frontContent,
         image: {
@@ -283,6 +225,8 @@ const Canvas = ({ material, setMaterial, size, setSize, product,id, cvsHeight, c
     if (imageSrcBack) {
       const img = new Image();
       img.src = imageSrcBack;
+      
+      img.crossOrigin = 'Anonymous'
       setBackContent({
         ...backContent,
         image: { ...backContent.image, value: img },
@@ -297,7 +241,7 @@ const Canvas = ({ material, setMaterial, size, setSize, product,id, cvsHeight, c
     setShowTransformer(false);console.log([frontContent.screenshot, backContent.screenshot]); 
     return [frontContent.screenshot, backContent.screenshot];
   }
-
+ 
   const downloadDesign = () => {
     const base64Images = submitDesign()
     base64Images && base64Images.length>0 && base64Images.forEach((base64String, index) => {

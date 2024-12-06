@@ -15,7 +15,7 @@ const LeftTools = ({ setContent, content, deleteImg, handleImageChange, setShowT
 
   const handleFileButtonClick = () => {
     fileInputRef.current.click();
-  };
+  }; 
 
   const deleteImgAndFile = () => {
     deleteImg();

@@ -81,7 +81,7 @@ const ProductCheck = () => {
   return (
     <div className="container" style={{ width: "100%", maxWidth: "800px" }}>
       <div className="product-check-box">
-        <div className="check-box-heading">Məhsullar</div>
+        <div className="check-box-heading">{product && product?.name}</div>
         <hr style={{ border: "1px solid #DEDEDE" }} />
         <div className="check-boxes">
           <div className="product-check-item-image">
