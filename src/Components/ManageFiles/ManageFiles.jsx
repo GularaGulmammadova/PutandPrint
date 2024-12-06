@@ -87,7 +87,7 @@ const ManageFiles = ({ size, setSize, frontContent, material, setMaterial, backC
     } else {
       formData.append('front_image', frontImageFile);
       formData.append('back_image', backImageFile);
-      formData.append('front_mockup', backImageFile);
+      formData.append('front_mockup', frontMockupFile);
       formData.append('back_mockup', backMockupFile || frontMockupFile);
     }
   

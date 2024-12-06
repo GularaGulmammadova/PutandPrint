@@ -139,7 +139,7 @@ const PreparedCheck = () => {
                   min="1"
                 />
                 <div className="product-totally-price">
-                  {data?.price * quantity} ₼
+                  {data?.price_thick * quantity} ₼
                 </div>
               </div>
             </div>
