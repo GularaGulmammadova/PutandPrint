@@ -5,7 +5,7 @@ import axios from "axios";
 import "./ProductDetail.css";
 import { Link } from "react-router-dom";
 
-const ProductDetail = ({frontContent, setFrontContent, backContent, setBackContent, material, setMaterial, size, setSize}) => {
+const ProductDetail = ({initialFront, initialBack, frontContent, setFrontContent, backContent, setBackContent, material, setMaterial, size, setSize}) => {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [mainImage, setMainImage] = useState("");
@@ -43,6 +43,11 @@ const ProductDetail = ({frontContent, setFrontContent, backContent, setBackConte
 
     fetchProduct();
   }, [id]);
+
+  useEffect(() => {
+    setFrontContent(initialFront);
+    setBackContent(initialBack);
+  }, [])
 
   const handleThumbnailClick = (image, index) => {
     setMainImage(image);

@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios'; 
 
-const ManageFiles = ({  initialFront, initialBack, size, setSize, frontContent, setFrontContent, setBackContent, material, setMaterial, backContent, setColor, product, downloadDesign, id, captureScreenshot }) => {
+const ManageFiles = ({ size, setSize, frontContent, material, setMaterial, backContent, setColor, product, downloadDesign, id, captureScreenshot }) => {
   const [quantity, setQuantity] = useState(1); 
   const navigate = useNavigate();
   const sizes = ['S', 'M', 'L', 'XL', '2XL'];
