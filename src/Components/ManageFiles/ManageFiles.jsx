@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios'; 
 
-const ManageFiles = ({ size, setSize, frontContent, material, setMaterial, backContent, setColor, product, downloadDesign, id, captureScreenshot }) => {
+const ManageFiles = ({  initialFront, initialBack, size, setSize, frontContent, setFrontContent, setBackContent, material, setMaterial, backContent, setColor, product, downloadDesign, id, captureScreenshot }) => {
   const [quantity, setQuantity] = useState(1); 
   const navigate = useNavigate();
   const sizes = ['S', 'M', 'L', 'XL', '2XL'];
@@ -29,6 +29,7 @@ const ManageFiles = ({ size, setSize, frontContent, material, setMaterial, backC
             };
             reader.readAsDataURL(blob);
         });
+
     } catch (error) {
         console.error('Error converting image to Base64:', error);
         throw error; // Re-throw error to handle it outside if necessary
@@ -58,16 +59,12 @@ const ManageFiles = ({ size, setSize, frontContent, material, setMaterial, backC
     captureScreenshot();
     const formData = new FormData();
 
-    console.log(product.front);
-    // console.log(backContent.screenshot);
-
     const emptyWhite = await convertImageToBase64(product.front);
     const emptyBlack = await convertImageToBase64(product.black_front);
 
     const emptyWhite64 = base64ToFile(emptyWhite, 'empty.png');
     const emptyBlack64 = base64ToFile(emptyBlack, 'emptyb.png');
 
-    console.log(emptyWhite)
     
     const frontImageFile = frontContent.image.value && frontContent.image.value.src ? base64ToFile(frontContent.image.value.src, 'frontImage.png') : base64ToFile(frontContent.screenshot, 'frontMockup.png');
     const backImageFile = backContent.image.value && backContent.image.value.src ? base64ToFile(backContent.image.value.src, 'backImage.png') : base64ToFile(frontContent.screenshot, 'frontMockup.png');
@@ -126,6 +123,7 @@ const ManageFiles = ({ size, setSize, frontContent, material, setMaterial, backC
       );
       console.log("Sifariş uğurla yaradıldı:", response.data);
       if (response.data.id) navigate(`/productcheck/${response.data.id}`);
+      
     } catch (error) {
       console.error("Sifariş yaradılarkən xəta baş verdi:", error.response?.data || error.message);
       alert("Sifariş yaradılarkən xəta baş verdi.");
