@@ -219,7 +219,7 @@ const Canvas = ({ material, setMaterial, size, setSize, product,id, cvsHeight, c
         },
       });
     }
-  }, [imageSrc, showFront]);
+  }, [imageSrc]);
 
   useEffect(() => {
     if (imageSrcBack) {
@@ -229,10 +229,11 @@ const Canvas = ({ material, setMaterial, size, setSize, product,id, cvsHeight, c
       img.crossOrigin = 'Anonymous'
       setBackContent({
         ...backContent,
-        image: { ...backContent.image, value: img },
+        image: { ...backContent.image, value: img,
+          height: (currentImage.width * img.naturalHeight) / img.naturalWidth },
       });
     }
-  }, [imageSrcBack, showFront]);
+  }, [imageSrcBack]);
 
   const currentImage = showFront ? frontContent.image : backContent.image;
   const currentLabel = showFront ? frontContent.label : backContent.label;
