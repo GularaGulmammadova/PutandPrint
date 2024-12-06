@@ -26,7 +26,7 @@ const HomePage = () => {
   }, []);
 
   const handleOrderClick = (productId) => {
-    navigate(`/productcheck/${productId}`);
+    navigate(`/preparedcheck/${productId}`);
   };
 
   return (
@@ -93,7 +93,7 @@ const HomePage = () => {
               <div className="home-desc">
                 <div className="home-price">
                   <span>{product.price_display}</span>
-                  <Link to={`/productcheck/${product.id}`}>
+                  <Link to={`/preparedcheck/${product.id}`}>
                     <button
                       className="home-design-button"
                       onClick={() => handleOrderClick(product.id)}
