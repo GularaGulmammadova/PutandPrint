@@ -12,11 +12,11 @@ const ProductDetail = ({frontContent, setFrontContent, backContent, setBackConte
   const [selectedColor, setSelectedColor] = useState("");
   const [error, setError] = useState(null);
   const sizes = ['S', 'M', 'L', 'XL', '2XL'];
-  const materials = ['Nazik', 'Qalın']; 
+  // const materials = ['Nazik', 'Qalın']; 
 
 
-  useEffect(() => {
-    const fetchProduct = async () => {
+  useEffect(() => { 
+    const fetchProduct = async () => { 
       try {
         const response = await axios.get(
           `https://put-print-ky689.ondigitalocean.app/api/products/${id}/`
@@ -124,6 +124,14 @@ const ProductDetail = ({frontContent, setFrontContent, backContent, setBackConte
       ? [product.images?.front, product.images?.black_front]
       : [];
 
+  const showPrice = () => {
+    if (product.price_thin === product.price_thick){ 
+      return product.price_display;
+    } else {
+      return material === 'Nazik' ? `${product.price_thin} ₼` : `${product.price_thick} ₼`;
+    }
+  }
+    
 
 
   return (
@@ -172,7 +180,7 @@ const ProductDetail = ({frontContent, setFrontContent, backContent, setBackConte
               <div className="threads-variants">
                 <p>Material</p>
                 <div className="threads">
-                  {materials.map((threads) => (
+                  {product.threads.split(', ').map((threads) => (
                     <button
                       key={threads}
                       className={`threads-box ${
@@ -205,7 +213,7 @@ const ProductDetail = ({frontContent, setFrontContent, backContent, setBackConte
               </div>
             )}
             <div className="product-price">
-              <span>{product.price_display}</span>
+              <span>{showPrice()}</span>
               {product.id >= 7 && product.id <= 14 ? (
                 <Link to={`/productcheck/${product.id}`}>
                   <button className="order-button">Sifariş et</button>

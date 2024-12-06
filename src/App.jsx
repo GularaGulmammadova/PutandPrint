@@ -6,7 +6,7 @@ import ProductDetail from './Components/ProductDetail/ProductDetail'
 import { Route, Routes, useLocation, useParams } from 'react-router'
 import About from './Components/About/About'
 import Contact from './Components/ContactPage/Contact'
-import Footer from './Components/Footer/Footer'
+import Footer from './Components/Footer/Footer' 
 import HomePage from "./Components/HomePage/HomePage";
 import Corporate from './Components/Corporate/Corporate'
 import ScrollToTop from './ScrollToTop/ScrollToTop'
